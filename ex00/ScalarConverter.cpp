@@ -91,6 +91,26 @@ bool is_double(const std::string &str)
     return false;
 }
 
+bool is_nan_float(float f)
+{
+	return (f != f);
+}
+
+bool is_nan_double(double d)
+{
+	return (d != d);
+}
+
+bool is_inf_float(float f)
+{
+	return (f == std::numeric_limits<float>::infinity() || f == -std::numeric_limits<float>::infinity());
+}
+
+bool is_inf_double(double d)
+{
+	return (d == std::numeric_limits<double>::infinity() || d == -std::numeric_limits<double>::infinity());
+}
+
 std::string detect_types(const std::string &str)
 {
     if (is_char(str))
@@ -117,7 +137,7 @@ void convert_char(const char &c)
 
 void convert_int(long &n)
 {
-    if (CHAR_MIN <= n && CHAR_MAX >= n)
+    if (std::numeric_limits<char>::min() <= n && std::numeric_limits<char>::max() >= n)
     {
         if (isprint(static_cast<int>(n)))
             std::cout << "char: '" << static_cast<char>(n) << "'" << std::endl;
@@ -126,7 +146,7 @@ void convert_int(long &n)
     }
     else
         std::cout << "char: impossible" << std::endl;
-    if (INT_MIN <= n && INT_MAX >= n)
+    if (std::numeric_limits<int>::min() <= n && std::numeric_limits<int>::max() >= n)
         std::cout << "int: " << static_cast<int>(n) << std::endl;
     else
         std::cout << "int: impossible" << std::endl;
@@ -142,7 +162,7 @@ void convert_int(long &n)
 
 void convert_float(float &f)
 {
-    if (CHAR_MIN <= f && CHAR_MAX >= f)
+    if (std::numeric_limits<char>::min() <= f && std::numeric_limits<char>::max() >= f)
     {
         if (isprint(static_cast<int>(f)))
             std::cout << "char: '" << static_cast<char>(f) << "'" << std::endl;
@@ -151,23 +171,23 @@ void convert_float(float &f)
     }
     else
         std::cout << "char: impossible" << std::endl;
-    if (INT_MIN <= f && INT_MAX >= f)
+    if (std::numeric_limits<int>::min() <= f && std::numeric_limits<int>::max() >= f)
         std::cout << "int: " << static_cast<int>(f) << std::endl;
     else
         std::cout << "int: impossible" << std::endl;
-    if (1000000.0 <= f || -1000000.0 >= f || std::isnan(f) || std::isinf(f))
+    if (1000000.0 <= f || -1000000.0 >= f || is_nan_float(f) || is_inf_float(f))
         std::cout << "float: " << static_cast<float>(f) << "f" << std::endl;
     else
         std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(f) << "f" << std::endl;
-    if (1000000.0 <= f || -1000000.0 >= f || std::isnan(f) || std::isinf(f))
-        std::cout << "double: " << static_cast<double>(f) << "f" << std::endl;
+    if (1000000.0 <= f || -1000000.0 >= f || is_nan_float(f) || is_inf_float(f))
+        std::cout << "double: " << static_cast<double>(f) << std::endl;
     else
         std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double>(f) << std::endl;
 }
 
 void convert_double(double &d)
 {
-    if (CHAR_MIN <= d && CHAR_MAX >= d)
+    if (std::numeric_limits<char>::min() <= d && std::numeric_limits<char>::max() >= d)
     {
         if (isprint(static_cast<int>(d)))
             std::cout << "char: '" << static_cast<char>(d) << "'" << std::endl;
@@ -176,15 +196,15 @@ void convert_double(double &d)
     }
     else
         std::cout << "char: impossible" << std::endl;
-    if (INT_MIN <= d && INT_MAX >= d)
+    if (std::numeric_limits<int>::min() <= d && std::numeric_limits<int>::max() >= d)
         std::cout << "int: " << static_cast<int>(d) << std::endl;
     else
         std::cout << "int: impossible" << std::endl;
-    if (1000000.0 <= d || -1000000.0 >= d || isnan(d) || isinf(d))
+    if (1000000.0 <= d || -1000000.0 >= d || is_nan_double(d) || is_inf_double(d))
         std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
     else
         std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float>(d) << "f" << std::endl;
-    if (1000000.0 <= d || -1000000.0 >= d || isnan(d) || isinf(d))
+    if (1000000.0 <= d || -1000000.0 >= d || is_nan_double(d) || is_inf_double(d))
         std::cout << "double: " << d << std::endl;
     else
         std::cout << "double: " << std::fixed << std::setprecision(1) << d << std::endl;

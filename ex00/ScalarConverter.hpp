@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <cctype>
+#include <cstdlib>
 
 class ScalarConverter
 {
